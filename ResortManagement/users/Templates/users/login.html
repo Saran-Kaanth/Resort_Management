@@ -1,0 +1,47 @@
+{% extends 'users/base.html' %}
+{% load socialaccount %} 
+{% block title %}Sign In{% endblock %}
+
+{% block content %}
+    <h1 style="padding-left: 45%; padding-top:18%;">login</h1>
+    <div class="container d-flex align-items-center justify-content">
+        {% comment %} {%load crispy_forms_tags %} {% endcomment %}
+        <table >
+        <form method="post">
+            {% csrf_token %}
+            {% if messages %}
+          {% for msg in messages %}
+            <h4>{{msg}}</h4>
+          {% endfor %}
+        {% endif %}
+         {% for field in form%}
+        <tr>
+            <td>{{ field.errors }}</td>
+        </tr>
+        <tr>
+            <td>{{ field.label_tag }}</td>
+            <td> {{ field }} </td>
+        </tr>
+        
+    {% endfor %} 
+        </table>
+    
+        </div>
+    </br>
+        
+            <input type="submit" label="submit" name="label" value="login">&nbsp;&nbsp;&nbsp;<a href= {% url 'userregister' %}>Sign Up</a>
+    
+    </form>
+    
+
+    <div class="row">
+        <div class="col-md-8 mx-auto social-container my-2 order-md-1">
+            <button class="btn mb-2">
+                {% comment %} <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a> {% endcomment %}
+                <a class="checkBtn" href="{% url "google_login" %}">Login with Google</a>
+            </button>
+        </div>
+    </div>
+
+{% endblock %}
+        

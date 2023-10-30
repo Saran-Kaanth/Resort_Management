@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>Rooms List</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</style>
+    </head>
+    {%load static%}
+<body style="background-image:url({%static 'hotel_room.jpg' %});color:white;">
+</br></br>
+{% block content %}
+<div class="container mt-3">
+        {% if error_message %}
+        <div class="alert alert-danger">
+            <strong>{{error_message}}</strong> 
+        </div>    
+        {% endif %}
+  </div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="container-sm align-content-sm-center">
+            <h1>Make yourself </br>comfortable</h1>
+        </br>
+    </br>
+</br>
+<form method="get">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary">Submit</button> <span>
+    {% if user.is_staff %}
+      <a href={% url 'staffhome' %}>Back</a></span>
+    {% else %}
+      <a href={% url 'userhome' %}>Back</a></span>
+    {% endif %}
+</form>
+        </div>
+        
+    </div>
+    <div class="col-lg-8 scrollit">
+        <div class="container-sm">
+        <h1>Choose your rooms</h1>
+        {% for room in rooms_list %}
+<div class="card" style="color:blue">
+<div class="card-header">
+<span class="font-weight-bold">{{ room.room_no }}</span> &middot;
+<span class="text-muted"> {{ room.room_type }} |
+{{ room.is_available }}</span>
+</div>
+<div class="card-body">
+<i class="bi bi-currency-rupee">
+<span ><b>&#8377;</b></span>
+</i>{{ room.room_price }}
+</div>
+<div class="card-footer text-center text-muted">
+<a href="{% url 'roomdetail' room.pk %}">Book Now</a>
+ {% comment %} <a href="{{room.get_absolute_url}}">Book Now</a> {% endcomment %}
+</div>
+</div>
+<br />
+{% endfor %}
+    </div>
+  </div> 
+</div>
+
+
+{% endblock content %}
+</body>
+</html>
+
+
+<!-- <form method="GET">
+    <div class="mb-3 mt-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      </div>
+      <div class="mb-3">
+        <label for="pwd" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+      </div>
+      <div class="form-check mb-3">
+        <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" name="remember"> Remember me
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    
+</form> -->
